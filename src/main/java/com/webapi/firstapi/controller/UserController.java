@@ -2,6 +2,7 @@ package com.webapi.firstapi.controller;
 
 import com.webapi.firstapi.models.User;
 import com.webapi.firstapi.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,13 +36,13 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED) // Вернёт статус 201
     @PostMapping("")
-    void create(@RequestBody User user){ // Параметр из тела запроса
+    void create(@Valid @RequestBody User user){ // Параметр из тела запроса
         userService.create(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("{id}")
-    void update(@RequestBody User user, @PathVariable Integer id){
+    void update(@Valid @RequestBody User user, @PathVariable Integer id){
         userService.update(user, id);
     }
 
