@@ -33,8 +33,21 @@ public class UserController {
         }
     }
 
+    @ResponseStatus(HttpStatus.CREATED) // Вернёт статус 201
     @PostMapping("")
-    void create(@RequestBody  User user){ // Параметр из тела запроса
+    void create(@RequestBody User user){ // Параметр из тела запроса
         userService.create(user);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("{id}")
+    void update(@RequestBody User user, @PathVariable Integer id){
+        userService.update(user, id);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}")
+    void delete(@PathVariable Integer id){
+        userService.delete(id);
     }
 }

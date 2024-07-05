@@ -21,6 +21,17 @@ public class UserService {
         users.add(user);
     }
 
+    public void update(User user, Integer id){
+        Optional<User> existing = findById(id);
+        if(existing.isPresent()){
+            users.set(users.indexOf(existing.get()), user);
+        }
+    }
+
+    public void delete(Integer id){
+        users.removeIf(u -> u.id() == id);
+    }
+
     @PostConstruct
     private void init(){
         users.add(new User( 1,
