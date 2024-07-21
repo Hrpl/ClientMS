@@ -1,6 +1,6 @@
 package com.webapi.firstapi.controller;
 
-import com.webapi.firstapi.models.User;
+import com.webapi.firstapi.models.Users;
 import com.webapi.firstapi.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/users/")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -19,13 +20,13 @@ public class UserController {
     }
 
     @GetMapping("")
-    List<User> findAll(){
+    List<Users> findAll(){
         return userService.findAll();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("login/{login}/{password}")
-    User login(@PathVariable String login, @PathVariable String password){
+    Users login(@PathVariable String login, @PathVariable String password){
         try {
             return userService.login(login, password);
         }
@@ -36,7 +37,7 @@ public class UserController {
 
 //    @GetMapping("/{id}")
 //    User findUserByid(@PathVariable int id){ // Параметр из строки запроса
-//        var user = userService.findById(id);
+//        var user = userService.findById(id );
 //        if(user.isPresent()){
 //            return user.get();
 //        }
