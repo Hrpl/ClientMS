@@ -1,8 +1,12 @@
 package com.webapi.firstapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -14,22 +18,25 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Project project;
+    @JsonIgnore
+    private Project project_id;
 
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "executor_id")
+    @JsonIgnore
     private Users executor;
 
-    private Date createDate;
+    private LocalDate createDate;
 
-    private Date deadline;
+    private LocalDate deadline;
 
-    private Date factEndDate;
+    private LocalDate factEndDate;
 
     @ManyToOne
     @JoinColumn(name = "status_id")
+    @JsonIgnore
     private StatusTask statusTask;
 
     public Long getId() {
@@ -41,11 +48,11 @@ public class Task {
     }
 
     public Project getProject() {
-        return project;
+        return project_id;
     }
 
     public void setProject(Project project) {
-        this.project = project;
+        this.project_id = project;
     }
 
     public String getDescription() {
@@ -64,27 +71,27 @@ public class Task {
         this.executor = executor;
     }
 
-    public Date getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
-    public Date getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
-    public Date getFactEndDate() {
+    public LocalDate getFactEndDate() {
         return factEndDate;
     }
 
-    public void setFactEndDate(Date factEndDate) {
+    public void setFactEndDate(LocalDate factEndDate) {
         this.factEndDate = factEndDate;
     }
 

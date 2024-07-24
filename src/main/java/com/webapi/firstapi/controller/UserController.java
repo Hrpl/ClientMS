@@ -1,11 +1,12 @@
 package com.webapi.firstapi.controller;
 
 import com.webapi.firstapi.models.Users;
+import com.webapi.firstapi.services.UserRepository;
 import com.webapi.firstapi.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
@@ -15,11 +16,15 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService){
+    private final UserRepository userRepository;
+
+    public UserController(UserService userService,
+                          UserRepository userRepository){
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
-    @GetMapping("")
+    @GetMapping()
     List<Users> findAll(){
         return userService.findAll();
     }
@@ -33,6 +38,13 @@ public class UserController {
         catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found"); // исключение статус кода, хз почему не надо указывать throw
         }
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)//  Вернёт статус 201
+    @CrossOrigin(origins = "*")
+    @PostMapping("create/")
+    void createUser(@RequestBody Users user){ // Параметр из тела запроса
+       userRepository.save(user);
     }
 
 //    @GetMapping("/{id}")
